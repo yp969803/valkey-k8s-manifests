@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: valkey
+data:
+  valkey.conf: |
+    protected-mode no
+    notify-keyspace-events "KEA$"
+    cluster-enabled ${replicas > 1 ? "yes" : "no"}
+    cluster-config-file nodes.conf
+    cluster-node-timeout 5000
+    cluster-allow-reads-when-down yes
+    cluster-announce-port 6379
+    cluster-announce-bus-port 16379
+    port 6379
+    cluster-port 16379
+    appendonly yes
+    replica-read-only no
